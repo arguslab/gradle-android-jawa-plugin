@@ -1,0 +1,115 @@
+apply plugin: "java"
+apply plugin: "groovy"
+apply plugin: "maven"
+apply plugin: "signing"
+apply plugin: "idea"
+
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile "commons-io:commons-io:2.4"
+    testCompile "com.android.tools.build:gradle:2.0.0"
+    testCompile "org.scala-lang:scala-compiler:2.11.7"
+}
+
+description "Gradle Android Jawa Plugin adds jawa language support to official gradle android plugin."
+group = "com.github.arguslab"
+version = "1.0-SNAPSHOT"
+sourceCompatibility = JavaVersion.VERSION_1_6
+targetCompatibility = JavaVersion.VERSION_1_6
+
+def uploadToSonatypeRepository = hasProperty("sonatypeUserName")
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            snapshotRepository(url: uri("gh-pages/repository/snapshot"))
+
+            if (uploadToSonatypeRepository) {
+                def repositoryUrl = version.endsWith("-SNAPSHOT") ? "https://oss.sonatype.org/content/repositories/snapshots"
+                                                                  : "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: repositoryUrl) {
+                    authentication(userName: sonatypeUserName, password: sonatypePassword)
+                }
+                pom.project {
+                    name "Gradle Android Jawa Plugin"
+                    packaging "jar"
+                    description project.description
+                    url "https://github.com/arguslab/gradle-android-jawa-plugin"
+
+                    scm {
+                        url "scm:git@github.com:arguslab/gradle-android-jawa-plugin.git"
+                        connection "scm:git@github.com:arguslab/gradle-android-jawa-plugin.git"
+                        developerConnection "scm:git@github.com:arguslab/gradle-android-jawa-plugin.git"
+                    }
+
+                    licenses {
+                        license {
+                            name "Eclipse-1.0"
+                            url "http://www.opensource.org/licenses/eclipse-1.0.php"
+                            distribution "repo"
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id "fgwei"
+                            name "Fengguo (Hugo) Wei"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+task groovydocJar(type: Jar, dependsOn: groovydoc) {
+    from groovydoc.destinationDir
+    classifier = "javadoc"
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = "sources"
+}
+
+artifacts {
+    archives jar
+    archives groovydocJar
+    archives sourceJar
+}
+
+signing {
+    if (uploadToSonatypeRepository) {
+        sign configurations.archives
+    }
+}
+
+//task integTest(type: jp.leafytree.gradle.AndroidScalaPluginIntegrationTestTask, dependsOn: "uploadArchives")
+//task integrationTest(type: jp.leafytree.gradle.AndroidScalaPluginIntegrationTestTask, dependsOn: "uploadArchives")
+//task sample(type: jp.leafytree.gradle.AndroidScalaPluginSampleTask)
+group 'com.github.arguslab'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
