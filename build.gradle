@@ -96,30 +96,3 @@ signing {
         sign configurations.archives
     }
 }
-
-/*
- * Copyright (c) 2016. Fengguo Wei and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Detailed contributors are listed in the CONTRIBUTOR.md
- */
-
-//task integTest(type: jp.leafytree.gradle.AndroidScalaPluginIntegrationTestTask, dependsOn: "uploadArchives")
-//task integrationTest(type: jp.leafytree.gradle.AndroidScalaPluginIntegrationTestTask, dependsOn: "uploadArchives")
-//task sample(type: jp.leafytree.gradle.AndroidScalaPluginSampleTask)
-group 'com.github.arguslab'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'groovy'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.3.11'
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-}
