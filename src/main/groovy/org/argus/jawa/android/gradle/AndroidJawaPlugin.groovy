@@ -7,16 +7,27 @@
  *
  * Detailed contributors are listed in the CONTRIBUTOR.md
  */
-package org.argus.jawa.gradle
+
+
+package org.argus.jawa.android.gradle
 
 import com.google.common.annotations.VisibleForTesting
+import org.apache.commons.io.FileUtils
+import org.argus.jawa.gradle.tasks.DefaultJawaSourceSet
+import org.argus.jawa.gradle.tasks.compile.JawaCompile
+import org.codehaus.groovy.runtime.InvokerHelper
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.ProjectConfigurationException
+import org.gradle.api.file.FileCollection
 import org.gradle.api.file.SourceDirectorySet
+import org.gradle.api.internal.file.DefaultSourceDirectorySetFactory
 import org.gradle.api.internal.file.FileResolver
+import org.gradle.api.internal.file.collections.DefaultDirectoryFileTreeFactory
+import org.gradle.util.ConfigureUtil
 
 import javax.inject.Inject
+import java.util.concurrent.atomic.AtomicReference
 
 /**
  * AndroidJawaPlugin adds jawa language support to official gradle android plugin.
@@ -71,16 +82,12 @@ public class AndroidJawaPlugin implements Plugin<Project> {
             androidExtension.sourceSets.each { it.java.srcDirs(it.scala.srcDirs) }
             def allVariants = androidExtension.testVariants + (isLibrary ? androidExtension.libraryVariants : androidExtension.applicationVariants)
             allVariants.each { variant ->
-                addAndroidScalaCompileTask(variant)
+                addAndroidJawaCompileTask(variant)
             }
         }
 
         project.tasks.findByName("preBuild").doLast {
             FileUtils.forceMkdir(workDir)
-        }
-
-        project.tasks.withType(ScalaCompile) {
-            scalaCompileOptions.useAnt = false
         }
     }
 
@@ -88,7 +95,6 @@ public class AndroidJawaPlugin implements Plugin<Project> {
      * Registers the plugin to current project.
      *
      * @param project currnet project
-     * @param androidExtension extension of Android Plugin
      */
     public void apply(Project project) {
         if (!["com.android.application",
@@ -113,28 +119,13 @@ public class AndroidJawaPlugin implements Plugin<Project> {
     }
 
     /**
-     * Returns scala version from scala-library in given classpath.
+     * Returns jawa version from jawa-compiler in given classpath.
      *
-     * @param classpath the classpath contains scala-library
-     * @return scala version
+     * @param classpath the classpath contains jawa-compiler
+     * @return jawa version
      */
-    static String scalaVersionFromClasspath(Collection<File> classpath) {
-        def urls = classpath.collect { it.toURI().toURL() }
-        def classLoader = new URLClassLoader(urls.toArray(new URL[0]))
-        try {
-            def propertiesClass
-            try {
-                propertiesClass = classLoader.loadClass("scala.util.Properties\$")
-            } catch (ClassNotFoundException e) {
-                return null
-            }
-            def versionNumber = propertiesClass.MODULE$.scalaProps["maven.version.number"]
-            return new String(versionNumber) // Remove reference from ClassLoader
-        } finally {
-            if (classLoader instanceof Closeable) {
-                classLoader.close()
-            }
-        }
+    static String jawaVersionFromClasspath(Collection<File> classpath) {
+        return "1.0.2"
     }
 
     /**
@@ -156,15 +147,15 @@ public class AndroidJawaPlugin implements Plugin<Project> {
             if (sourceDirectorySetMap.containsKey(sourceSet.name)) {
                 return
             }
-            def include = "**/*.scala"
-            sourceSet.java.filter.include(include);
+            def include = "**/*.pilar"
+            sourceSet.java.filter.include(include)
             def dirSetFactory = new DefaultSourceDirectorySetFactory(fileResolver, new DefaultDirectoryFileTreeFactory())
-            sourceSet.convention.plugins.scala = new DefaultScalaSourceSet(sourceSet.name + "_AndroidScalaPlugin", dirSetFactory)
-            def scala = sourceSet.scala
-            scala.filter.include(include);
-            def scalaSrcDir = ["src", sourceSet.name, "scala"].join(File.separator)
-            scala.srcDir(scalaSrcDir)
-            sourceDirectorySetMap[sourceSet.name] = scala
+            sourceSet.convention.plugins.jawa = new DefaultJawaSourceSet(sourceSet.name + "_AndroidJawaPlugin", dirSetFactory)
+            def jawa = sourceSet.jawa
+            jawa.filter.include(include)
+            def jawaSrcDir = ["src", sourceSet.name, "jawa"].join(File.separator)
+            jawa.srcDir(jawaSrcDir)
+            sourceDirectorySetMap[sourceSet.name] = jawa
         }
     }
 
@@ -173,44 +164,32 @@ public class AndroidJawaPlugin implements Plugin<Project> {
      *
      * @param task the JavaCompile task
      */
-    void addAndroidScalaCompileTask(Object variant) {
+    void addAndroidJawaCompileTask(Object variant) {
         def javaCompileTask = variant.javaCompile
         // To prevent locking classes.jar by JDK6's URLClassLoader
         def libraryClasspath = javaCompileTask.classpath.grep { it.name != "classes.jar" }
-        def scalaVersion = scalaVersionFromClasspath(libraryClasspath)
-        if (!scalaVersion) {
+        def jawaVersion = jawaVersionFromClasspath(libraryClasspath)
+        if (!jawaVersion) {
             return
         }
-        project.logger.info("scala-library version=$scalaVersion detected")
-        def zincConfigurationName = "androidScalaPluginZincFor" + javaCompileTask.name
-        def zincConfiguration = project.configurations.findByName(zincConfigurationName)
-        if (!zincConfiguration) {
-            zincConfiguration = project.configurations.create(zincConfigurationName)
-            project.dependencies.add(zincConfigurationName, "com.typesafe.zinc:zinc:0.3.7")
-        }
-        def compilerConfigurationName = "androidScalaPluginScalaCompilerFor" + javaCompileTask.name
+        project.logger.info("jawa-compiler version=$jawaVersion detected")
+        def compilerConfigurationName = "androidJawaPluginJawaCompilerFor" + javaCompileTask.name
         def compilerConfiguration = project.configurations.findByName(compilerConfigurationName)
         if (!compilerConfiguration) {
             compilerConfiguration = project.configurations.create(compilerConfigurationName)
-            project.dependencies.add(compilerConfigurationName, "org.scala-lang:scala-compiler:$scalaVersion")
+            project.dependencies.add(compilerConfigurationName, "org.github.arguslab:jawa-compiler:$jawaVersion")
         }
         def variantWorkDir = getVariantWorkDir(variant)
-        def scalaCompileTask = project.tasks.create("compile${variant.name.capitalize()}Scala", ScalaCompile)
-        def scalaSources = variant.variantData.variantConfiguration.sortedSourceProviders.inject([]) { acc, val ->
+        def jawaCompileTask = project.tasks.create("compile${variant.name.capitalize()}Jawa", JawaCompile)
+        def jawaSources = variant.variantData.variantConfiguration.sortedSourceProviders.inject([]) { acc, val ->
             acc + val.java.sourceFiles
         }
-        scalaCompileTask.source = scalaSources
-        scalaCompileTask.destinationDir = javaCompileTask.destinationDir
-        scalaCompileTask.sourceCompatibility = javaCompileTask.sourceCompatibility
-        scalaCompileTask.targetCompatibility = javaCompileTask.targetCompatibility
-        scalaCompileTask.scalaCompileOptions.encoding = javaCompileTask.options.encoding
-        scalaCompileTask.classpath = javaCompileTask.classpath + project.files(androidPlugin.androidBuilder.getBootClasspath(false))
-        scalaCompileTask.scalaClasspath = compilerConfiguration.asFileTree
-        scalaCompileTask.zincClasspath = zincConfiguration.asFileTree
-        scalaCompileTask.scalaCompileOptions.incrementalOptions.analysisFile = new File(variantWorkDir, "analysis.txt")
-        if (extension.addparams) {
-            scalaCompileTask.scalaCompileOptions.additionalParameters = [extension.addparams]
-        }
+        jawaCompileTask.source = jawaSources
+        jawaCompileTask.setDestinationDir(javaCompileTask.destinationDir)
+        jawaCompileTask.setSourceCompatibility(javaCompileTask.sourceCompatibility)
+        jawaCompileTask.setTargetCompatibility(javaCompileTask.targetCompatibility)
+        jawaCompileTask.setClasspath(javaCompileTask.classpath + project.files(androidPlugin.androidBuilder.getBootClasspath(false)))
+        jawaCompileTask.setJawaClasspath(compilerConfiguration.asFileTree)
 
         def dummyDestinationDir = new File(variantWorkDir, "javaCompileDummyDestination") // TODO: More elegant way
         def dummySourceDir = new File(variantWorkDir, "javaCompileDummySource") // TODO: More elegant way
@@ -243,21 +222,21 @@ public class AndroidJawaPlugin implements Plugin<Project> {
             javaCompileTask.options.compilerArgs = javaCompileOriginalOptionsCompilerArgs.get()
 
             // R.java is appended lazily
-            scalaCompileTask.source = [] + new TreeSet(scalaCompileTask.source.collect { it } + javaCompileTask.source.collect { it }) // unique
-            def noisyProperties = ["compiler", "includeJavaRuntime", "incremental", "optimize", "useAnt"]
-            InvokerHelper.setProperties(scalaCompileTask.options,
+            jawaCompileTask.source = [] + new TreeSet(jawaCompileTask.source.collect { it } + javaCompileTask.source.collect { it }) // unique
+            def noisyProperties = ["compiler", "includeJavaRuntime"]
+            InvokerHelper.setProperties(jawaCompileTask.options,
                     javaCompileTask.options.properties.findAll { !noisyProperties.contains(it.key) })
             noisyProperties.each { property ->
                 // Suppress message from deprecated/experimental property as possible
-                if (!javaCompileTask.options.hasProperty(property) || !scalaCompileTask.options.hasProperty(property)) {
+                if (!javaCompileTask.options.hasProperty(property) || !jawaCompileTask.options.hasProperty(property)) {
                     return
                 }
-                if (scalaCompileTask.options[property] != javaCompileTask.options[property]) {
-                    scalaCompileTask.options[property] = javaCompileTask.options[property]
+                if (jawaCompileTask.options[property] != javaCompileTask.options[property]) {
+                    jawaCompileTask.options[property] = javaCompileTask.options[property]
                 }
             }
-            scalaCompileTask.execute()
-            project.logger.lifecycle(scalaCompileTask.path)
+            jawaCompileTask.execute()
+            project.logger.lifecycle(jawaCompileTask.path)
         }
     }
 }

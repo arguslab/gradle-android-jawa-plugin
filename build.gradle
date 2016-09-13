@@ -1,16 +1,28 @@
+import org.argus.jawa.android.gradle.AndroidJawaPluginIntegrationTestTask
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.5"
+    }
+}
+
 apply plugin: "java"
 apply plugin: "groovy"
 apply plugin: "maven"
 apply plugin: "signing"
 apply plugin: "idea"
+apply plugin: "com.gradle.plugin-publish"
 
 repositories {
     mavenCentral()
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
     }
 }
 
@@ -18,15 +30,19 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
     compile "commons-io:commons-io:2.4"
+    compile "gradle.plugin.com.github.arguslab:gradle-jawa-plugin:1.0.1"
+    compile group: 'com.github.arguslab', name: 'jawa-compiler_2.11', version: '1.0.2'
     testCompile "com.android.tools.build:gradle:2.0.0"
-    testCompile "org.scala-lang:scala-compiler:2.11.7"
 }
 
-description "Gradle Android Jawa Plugin adds jawa language support to official gradle android plugin."
 group = "com.github.arguslab"
-version = "1.0-SNAPSHOT"
-sourceCompatibility = JavaVersion.VERSION_1_6
-targetCompatibility = JavaVersion.VERSION_1_6
+version = "1.0.1-SNAPSHOT"
+description = "Gradle Android Jawa Plugin adds jawa language support to official gradle android plugin."
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+final boolean isSnapshot = project.version.endsWith('-SNAPSHOT')
 
 def uploadToSonatypeRepository = hasProperty("sonatypeUserName")
 
@@ -36,7 +52,7 @@ uploadArchives {
             snapshotRepository(url: uri("gh-pages/repository/snapshot"))
 
             if (uploadToSonatypeRepository) {
-                def repositoryUrl = version.endsWith("-SNAPSHOT") ? "https://oss.sonatype.org/content/repositories/snapshots"
+                def repositoryUrl = isSnapshot ? "https://oss.sonatype.org/content/repositories/snapshots"
                                                                   : "https://oss.sonatype.org/service/local/staging/deploy/maven2"
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
@@ -59,7 +75,6 @@ uploadArchives {
                         license {
                             name "Eclipse-1.0"
                             url "http://www.opensource.org/licenses/eclipse-1.0.php"
-                            distribution "repo"
                         }
                     }
 
@@ -67,6 +82,8 @@ uploadArchives {
                         developer {
                             id "fgwei"
                             name "Fengguo (Hugo) Wei"
+                            email 'fgwei521@gmail.com'
+                            organization 'arguslab'
                         }
                     }
                 }
@@ -75,24 +92,55 @@ uploadArchives {
     }
 }
 
-task groovydocJar(type: Jar, dependsOn: groovydoc) {
-    from groovydoc.destinationDir
-    classifier = "javadoc"
+
+pluginBundle {
+    website = 'https://github.com/arguslab/gradle-android-jawa-plugin'
+    vcsUrl = 'https://github.com/arguslab/gradle-android-jawa-plugin.git'
+    description = project.description
+    tags = ['jawa', 'android']
+
+    plugins {
+        androidJawaPlugin {
+            id = 'org.argus.android-jawa'
+            displayName = 'Android Jawa Gradle Plugin'
+        }
+    }
 }
 
 task sourceJar(type: Jar) {
-    from sourceSets.main.allSource
-    classifier = "sources"
+    classifier = 'sources'
+    description 'generate sources'
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    description 'generate javadoc'
+    from javadoc
 }
 
 artifacts {
-    archives jar
-    archives groovydocJar
     archives sourceJar
+    archives javadocJar
+}
+
+task integTest(type: AndroidJawaPluginIntegrationTestTask, dependsOn: "uploadArchives")
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.13'
 }
 
 signing {
-    if (uploadToSonatypeRepository) {
-        sign configurations.archives
-    }
+    required { !isSnapshot && gradle.taskGraph.hasTask('uploadArchives') }
+    sign configurations.archives
+}
+
+// the gradle plugin portal isn't compatible with SNAPSHOT versions
+// https://discuss.gradle.org/t/uploading-snapshot-versions-to-the-plugin-portal/11347
+if (isSnapshot) {
+    signArchives.enabled = false
+    publishPlugins.enabled = false
+} else {
+    signArchives.enabled = true
+    publishPlugins.enabled = true
 }

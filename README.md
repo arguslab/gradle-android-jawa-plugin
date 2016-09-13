@@ -24,7 +24,7 @@ gradle-android-jawa-plugin adds jawa language support to official gradle android
 buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:2.0.0"
-        classpath "com.github.arguslab.gradle:gradle-android-jawa-plugin:1.0"
+        classpath "com.github.arguslab.gradle:gradle-android-jawa-plugin:1.0.1"
     }
 }
 ```
@@ -47,7 +47,7 @@ You can customize those directories similar to java.
 android {
     sourceSets {
         main {
-            scala {
+            jawa {
                 srcDir "path/to/main/jawa" // default: "src/main/jawa"
             }
         }
