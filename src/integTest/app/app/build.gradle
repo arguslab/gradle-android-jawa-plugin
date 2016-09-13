@@ -24,7 +24,6 @@ android {
 }
 
 dependencies {
-    compile "com.github.arguslab:jawa-compiler:$jawaVersion"
     compile "com.android.support:multidex:1.0.1"
     androidTestCompile "com.android.support:multidex-instrumentation:1.0.1", { exclude module: "multidex" }
 }

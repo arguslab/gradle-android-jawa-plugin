@@ -13,7 +13,9 @@ package org.argus.jawa.android.gradle
 
 import com.google.common.annotations.VisibleForTesting
 import org.apache.commons.io.FileUtils
+import org.argus.jawa.gradle.plugins.JawaJarFile
 import org.argus.jawa.gradle.tasks.DefaultJawaSourceSet
+import org.argus.jawa.gradle.tasks.JawaRuntime
 import org.argus.jawa.gradle.tasks.compile.JawaCompile
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.gradle.api.Plugin
@@ -24,7 +26,6 @@ import org.gradle.api.file.SourceDirectorySet
 import org.gradle.api.internal.file.DefaultSourceDirectorySetFactory
 import org.gradle.api.internal.file.FileResolver
 import org.gradle.api.internal.file.collections.DefaultDirectoryFileTreeFactory
-import org.gradle.util.ConfigureUtil
 
 import javax.inject.Inject
 import java.util.concurrent.atomic.AtomicReference
@@ -71,7 +72,7 @@ public class AndroidJawaPlugin implements Plugin<Project> {
         }
         this.androidExtension = androidExtension
         this.workDir = new File(project.buildDir, "android-jawa")
-        updateAndroidExtension()
+//        updateAndroidExtension()
         updateAndroidSourceSetsExtension()
         androidExtension.buildTypes.whenObjectAdded { updateAndroidSourceSetsExtension() }
         androidExtension.productFlavors.whenObjectAdded { updateAndroidSourceSetsExtension() }
@@ -79,7 +80,7 @@ public class AndroidJawaPlugin implements Plugin<Project> {
 
         project.afterEvaluate {
             updateAndroidSourceSetsExtension()
-            androidExtension.sourceSets.each { it.java.srcDirs(it.scala.srcDirs) }
+            androidExtension.sourceSets.each { it.java.srcDirs(it.jawa.srcDirs) }
             def allVariants = androidExtension.testVariants + (isLibrary ? androidExtension.libraryVariants : androidExtension.applicationVariants)
             allVariants.each { variant ->
                 addAndroidJawaCompileTask(variant)
@@ -125,19 +126,21 @@ public class AndroidJawaPlugin implements Plugin<Project> {
      * @return jawa version
      */
     static String jawaVersionFromClasspath(Collection<File> classpath) {
+//        def jawajar = JawaRuntime.findJawaJarFile(classpath)
+//        return jawajar == null ? null: jawajar.version.toString()
         return "1.0.2"
     }
 
     /**
      * Updates AndroidPlugin's root extension to work with AndroidJawaPlugin.
      */
-    void updateAndroidExtension() {
-        androidExtension.metaClass.getJawa = { extension }
-        androidExtension.metaClass.jawa = { configureClosure ->
-            ConfigureUtil.configure(configureClosure, extension)
-            androidExtension
-        }
-    }
+//    void updateAndroidExtension() {
+//        androidExtension.metaClass.getJawa = { extension }
+//        androidExtension.metaClass.jawa = { configureClosure ->
+//            ConfigureUtil.configure(configureClosure, extension)
+//            androidExtension
+//        }
+//    }
 
     /**
      * Updates AndroidPlugin's sourceSets extension to work with AndroidJawaPlugin.
@@ -177,7 +180,7 @@ public class AndroidJawaPlugin implements Plugin<Project> {
         def compilerConfiguration = project.configurations.findByName(compilerConfigurationName)
         if (!compilerConfiguration) {
             compilerConfiguration = project.configurations.create(compilerConfigurationName)
-            project.dependencies.add(compilerConfigurationName, "org.github.arguslab:jawa-compiler:$jawaVersion")
+            project.dependencies.add(compilerConfigurationName, "com.github.arguslab:jawa-compiler_2.11:$jawaVersion")
         }
         def variantWorkDir = getVariantWorkDir(variant)
         def jawaCompileTask = project.tasks.create("compile${variant.name.capitalize()}Jawa", JawaCompile)
