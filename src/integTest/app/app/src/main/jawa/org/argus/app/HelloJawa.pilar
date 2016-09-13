@@ -1,0 +1,14 @@
+record `org.argus.app.HelloJawa` @kind class @AccessFlag PUBLIC {
+}
+procedure `void` `org.argus.app.HelloJawa.<init>`(`org.argus.app.HelloJawa` Jawa_v0 @kind this) @owner ^`org.argus.app.HelloJawa` @signature `Lorg/argus/app/HelloJawa;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+
+  #L1.  call `java.lang.Object.<init>`(Jawa_v0) @signature `Ljava/lang/Object;.<init>:()V` @classDescriptor ^`java.lang.Object` @kind direct;
+  #L2.  return  @kind void;
+}
+procedure `java.lang.String` `org.argus.app.HelloJawa.say`(`org.argus.app.HelloJawa` HelloJawa_v1 @kind this) @owner ^`org.argus.app.HelloJawa` @signature `Lorg/argus/app/HelloJawa;.say:()Ljava/lang/String;` @AccessFlag PUBLIC {
+
+  `java.lang.String` String_v0;
+
+  #L3.  String_v0:= "Hello Jawa in Android!" @kind object;
+  #L4.  return String_v0 @kind object;
+}
