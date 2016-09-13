@@ -1,59 +1,10 @@
-# gradle-android-jawa-plugin
+# Gradle support for Jawa in Android build
+[![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0) 
+
 
 gradle-android-jawa-plugin adds jawa language support to official gradle android plugin.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [Installation](#installation)
-  - [1. Add buildscript's dependency](#1-add-buildscripts-dependency)
-  - [2. Apply plugin](#2-apply-plugin)
-  - [3. Add scala-library dependency](#3-add-scala-library-dependency)
-  - [4. Put scala source files](#4-put-scala-source-files)
-- [Changelog](#changelog)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Installation
 
-### 1. Add buildscript's dependency
-
-`build.gradle`
-```groovy
-buildscript {
-    dependencies {
-        classpath "com.android.tools.build:gradle:2.0.0"
-        classpath "com.github.arguslab.gradle:gradle-android-jawa-plugin:1.0.1"
-    }
-}
-```
-
-### 2. Apply plugin
-
-`build.gradle`
-```groovy
-apply plugin: "com.android.application"
-apply plugin: "org.argus.android-jawa"
-```
-
-### 3. Put jawa source files
-
-Default locations are src/main/jawa.
-You can customize those directories similar to java.
-
-`build.gradle`
-```groovy
-android {
-    sourceSets {
-        main {
-            jawa {
-                srcDir "path/to/main/jawa" // default: "src/main/jawa"
-            }
-        }
-    }
-}
-```
-
-## Changelog
-- 1.0 First release
+The latest release version, and instructions to apply it, is available at [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.argus.android-jawa).
