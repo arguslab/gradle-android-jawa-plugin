@@ -33,7 +33,7 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
         ].each { projectName, runOnTravis ->
             def gradleArgs = ["clean", "connectedCheck", "uninstallAll"]
             [
-                    ["2.13", true,  "1.0.2", "2.0.0", "android-23", "24.0.2", "8", "23"],
+                    ["2.13", true,  "1.0.3", "2.0.0", "android-23", "24.0.2", "8", "23"],
             ].each { testParameters ->
                 if (!travis || (runOnTravis && testParameters[1])) {
                     def gradleVersion = testParameters[0]
@@ -89,7 +89,7 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
             gradleProperties.store(it, getClass().getName())
         }
         def gradleWrapper = new GradleWrapper(projectDir)
-        def args = ["--no-daemon", "--stacktrace", "--debug", "-Pcom.android.build.threadPoolSize=5"] + tasks
+        def args = ["--no-daemon", "--stacktrace", "-Pcom.android.build.threadPoolSize=5"] + tasks
         println "gradlew $args"
         def process = gradleWrapper.execute(args)
         [Thread.start { ByteStreams.copy(process.in, System.out) },

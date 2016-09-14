@@ -128,7 +128,7 @@ public class AndroidJawaPlugin implements Plugin<Project> {
     static String jawaVersionFromClasspath(Collection<File> classpath) {
 //        def jawajar = JawaRuntime.findJawaJarFile(classpath)
 //        return jawajar == null ? null: jawajar.version.toString()
-        return "1.0.2"
+        return "1.0.3"
     }
 
     /**
