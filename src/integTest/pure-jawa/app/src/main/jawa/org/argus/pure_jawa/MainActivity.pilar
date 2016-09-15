@@ -1,0 +1,16 @@
+record `org.argus.pure_jawa.MainActivity` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `org.argus.pure_jawa.MainActivity.<init>`(`org.argus.pure_jawa.MainActivity` MainActivity_v0 @kind this) @owner ^`org.argus.pure_jawa.MainActivity` @signature `Lorg/argus/pure_jawa/MainActivity;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+
+ #L1.  call `android.app.Activity.<init>`(MainActivity_v0) @signature `Landroid/app/Activity;.<init>:()V` @classDescriptor ^`android.app.Activity` @kind direct;
+ #L2.  return  @kind void;
+}
+procedure `void` `org.argus.pure_jawa.MainActivity.onCreate`(`org.argus.pure_jawa.MainActivity` MainActivity_v1 @kind this, `android.os.Bundle` Bundle_v2 @kind class) @owner ^`org.argus.pure_jawa.MainActivity` @signature `Lorg/argus/pure_jawa/MainActivity;.onCreate:()V` @AccessFlag PROTECTED {
+
+ `int` int_v0;
+
+ #L3.  call `android.app.Activity.onCreate`(MainActivity_v1, Bundle_v2) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @classDescriptor ^`android.app.Activity` @kind super;
+ #L4.  int_v0:= `@@org.argus.pure_jawa.R.layout.activity_main` @kind int @type ^`int`;
+ #L5.  call `org.argus.pure_jawa.MainActivity.setContentView`(MainActivity_v1, int_v0) @signature `Lorg/argus/pure_jawa/MainActivity;.setContentView:(I)V` @classDescriptor ^`org.argus.pure_jawa.MainActivity` @kind virtual;
+ #L6.  return  @kind void;
+}

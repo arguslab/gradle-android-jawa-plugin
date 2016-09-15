@@ -22,7 +22,9 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
     def run() {
         def travis = System.getenv("TRAVIS").toString().toBoolean()
         [
-                ["app", true],
+//                ["app", true],
+                ["pure-jawa", true],
+//                ["AndroidSpecific_PrivateDataLeak3", true],
 //                ["lib", false],
 //                ["appAndLib", true],
 //                ["largeAppAndLib", false],
@@ -60,11 +62,11 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
 
     def getGradleProperties(jawaVersion, androidPluginVersion, androidPluginCompileSdkVersion,
                             androidPluginBuildToolsVersion, androidPluginMinSdkVersion, androidPluginTargetSdkVersion) {
-        def snaphotRepositoryUrl = [project.buildFile.parentFile.absolutePath, "gh-pages", "repository", "snapshot"].join(File.separator)
+        def snapshotRepositoryUrl = [project.buildFile.parentFile.absolutePath, "gh-pages", "repository", "snapshot"].join(File.separator)
         def gradleProperties = new Properties()
         gradleProperties.putAll([
                 "org.gradle.jvmargs": "-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError",
-                snaphotRepositoryUrl: snaphotRepositoryUrl,
+                snapshotRepositoryUrl: snapshotRepositoryUrl,
                 jawaVersion: jawaVersion,
                 androidJawaPluginVersion: "1.0.1-SNAPSHOT",
                 androidPluginVersion: androidPluginVersion,
