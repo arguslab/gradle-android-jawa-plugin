@@ -1,0 +1,38 @@
+record `com.ksu.passwordPassTest.FooActivity` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `com.ksu.passwordPassTest.FooActivity.<init>`(`com.ksu.passwordPassTest.FooActivity` FooActivity_v0 @kind this) @owner ^`com.ksu.passwordPassTest.FooActivity` @signature `Lcom/ksu/passwordPassTest/FooActivity;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+
+  #L04707c.  call `android.app.Activity.<init>`(FooActivity_v0) @signature `Landroid/app/Activity;.<init>:()V` @classDescriptor ^`android.app.Activity` @kind direct;
+  #L047082.  return  @kind void;
+}
+procedure `void` `com.ksu.passwordPassTest.FooActivity.onCreate`(`com.ksu.passwordPassTest.FooActivity` FooActivity_v5 @kind this, `android.os.Bundle` Bundle_v6 @kind object) @owner ^`com.ksu.passwordPassTest.FooActivity` @signature `Lcom/ksu/passwordPassTest/FooActivity;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    `java.lang.String` String_v3;
+    `android.content.Context` Context_temp;
+    `android.content.Intent` Intent_v1;
+    `android.content.Intent` Intent_temp;
+    `int` int_v3;
+    `java.lang.Class` Class_v4;
+    `android.content.Context` Context_v3;
+    `android.content.Intent` Intent_v0;
+    `java.lang.String` String_v2;
+    `java.lang.String` String_temp;
+
+  #L047094.  call `android.app.Activity.onCreate`(FooActivity_v5, Bundle_v6) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @classDescriptor ^`android.app.Activity` @kind super;
+  #L04709a.  int_v3:= 2130903041I;
+  #L0470a0.  call `com.ksu.passwordPassTest.FooActivity.setContentView`(FooActivity_v5, int_v3) @signature `Lcom/ksu/passwordPassTest/FooActivity;.setContentView:(I)V` @classDescriptor ^`com.ksu.passwordPassTest.FooActivity` @kind virtual;
+  #L0470a6.  call Intent_temp:=  `com.ksu.passwordPassTest.FooActivity.getIntent`(FooActivity_v5) @signature `Lcom/ksu/passwordPassTest/FooActivity;.getIntent:()Landroid/content/Intent;` @classDescriptor ^`com.ksu.passwordPassTest.FooActivity` @kind virtual;
+  #L0470ac.  Intent_v0:= Intent_temp  @kind object;
+  #L0470ae.  String_v3:= "password" @kind object;
+  #L0470b2.  call String_temp:=  `android.content.Intent.getStringExtra`(Intent_v0, String_v3) @signature `Landroid/content/Intent;.getStringExtra:(Ljava/lang/String;)Ljava/lang/String;` @classDescriptor ^`android.content.Intent` @kind virtual;
+  #L0470b8.  String_v2:= String_temp  @kind object;
+  #L0470ba.  Intent_v1:= new `android.content.Intent`;
+  #L0470be.  call `android.content.Intent.<init>`(Intent_v1) @signature `Landroid/content/Intent;.<init>:()V` @classDescriptor ^`android.content.Intent` @kind direct;
+  #L0470c4.  call Context_temp:=  `com.ksu.passwordPassTest.FooActivity.getApplicationContext`(FooActivity_v5) @signature `Lcom/ksu/passwordPassTest/FooActivity;.getApplicationContext:()Landroid/content/Context;` @classDescriptor ^`com.ksu.passwordPassTest.FooActivity` @kind virtual;
+  #L0470ca.  Context_v3:= Context_temp  @kind object;
+  #L0470cc.  Class_v4:= constclass @type ^`com.ksu.passwordPassTest.BarActivity` @kind object;
+  #L0470d0.  call Intent_temp:=  `android.content.Intent.setClass`(Intent_v1, Context_v3, Class_v4) @signature `Landroid/content/Intent;.setClass:(Landroid/content/Context;Ljava/lang/Class;)Landroid/content/Intent;` @classDescriptor ^`android.content.Intent` @kind virtual;
+  #L0470d6.  String_v3:= "NewKey" @kind object;
+  #L0470da.  call Intent_temp:=  `android.content.Intent.putExtra`(Intent_v1, String_v3, String_v2) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @classDescriptor ^`android.content.Intent` @kind virtual;
+  #L0470e0.  call `com.ksu.passwordPassTest.FooActivity.startActivity`(FooActivity_v5, Intent_v1) @signature `Lcom/ksu/passwordPassTest/FooActivity;.startActivity:(Landroid/content/Intent;)V` @classDescriptor ^`com.ksu.passwordPassTest.FooActivity` @kind virtual;
+  #L0470e6.  return  @kind void;
+}
