@@ -23,8 +23,9 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
         def travis = System.getenv("TRAVIS").toString().toBoolean()
         [
 //                ["app", true],
-                ["pure-jawa", true],
-//                ["AndroidSpecific_PrivateDataLeak3", true],
+//                ["pure-jawa", true],
+                ["AndroidSpecific_PrivateDataLeak3", true],
+//                ["InterComponentCommunication_Explicit1", true],
 //                ["lib", false],
 //                ["appAndLib", true],
 //                ["largeAppAndLib", false],
@@ -48,7 +49,7 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
         }
     }
 
-    def getGradleWrapperProperties(gradleVersion) {
+    static def getGradleWrapperProperties(gradleVersion) {
         def gradleWrapperProperties = new Properties()
         gradleWrapperProperties.putAll([
                 distributionBase: "GRADLE_USER_HOME",

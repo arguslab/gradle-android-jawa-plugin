@@ -1,0 +1,40 @@
+record `com.ksu.explicit1.MainActivity` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `com.ksu.explicit1.MainActivity.<init>`(`com.ksu.explicit1.MainActivity` MainActivity_v0 @kind this) @owner ^`com.ksu.explicit1.MainActivity` @signature `Lcom/ksu/explicit1/MainActivity;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+
+  #L02c28c.  call `android.app.Activity.<init>`(MainActivity_v0) @signature `Landroid/app/Activity;.<init>:()V` @classDescriptor ^`android.app.Activity` @kind direct;
+  #L02c292.  return  @kind void;
+}
+procedure `void` `com.ksu.explicit1.MainActivity.onCreate`(`com.ksu.explicit1.MainActivity` MainActivity_v5 @kind this, `android.os.Bundle` Bundle_v6 @kind object) @owner ^`com.ksu.explicit1.MainActivity` @signature `Lcom/ksu/explicit1/MainActivity;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    `android.telephony.TelephonyManager` TelephonyManager_v2;
+    `java.lang.String` String_v3;
+    `android.content.Context` Context_temp;
+    `android.content.Intent` Intent_temp;
+    `java.lang.Object` Object_temp;
+    `java.lang.Object` Object_v2;
+    `int` int_v3;
+    `java.lang.Class` Class_v4;
+    `android.content.Context` Context_v3;
+    `android.content.Intent` Intent_v0;
+    `java.lang.String` String_temp;
+    `java.lang.String` String_v1;
+
+  #L02c2a4.  call `android.app.Activity.onCreate`(MainActivity_v5, Bundle_v6) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @classDescriptor ^`android.app.Activity` @kind super;
+  #L02c2aa.  int_v3:= 2130903040I;
+  #L02c2ae.  call `com.ksu.explicit1.MainActivity.setContentView`(MainActivity_v5, int_v3) @signature `Lcom/ksu/explicit1/MainActivity;.setContentView:(I)V` @classDescriptor ^`com.ksu.explicit1.MainActivity` @kind virtual;
+  #L02c2b4.  String_v3:= "phone" @kind object;
+  #L02c2b8.  call Object_temp:=  `com.ksu.explicit1.MainActivity.getSystemService`(MainActivity_v5, String_v3) @signature `Lcom/ksu/explicit1/MainActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @classDescriptor ^`com.ksu.explicit1.MainActivity` @kind virtual;
+  #L02c2be.  Object_v2:= Object_temp  @kind object;
+  #L02c2c0.  TelephonyManager_v2:= (`android.telephony.TelephonyManager`)Object_v2  @kind object;
+  #L02c2c4.  call String_temp:=  `android.telephony.TelephonyManager.getDeviceId`(TelephonyManager_v2) @signature `Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;` @classDescriptor ^`android.telephony.TelephonyManager` @kind virtual;
+  #L02c2ca.  String_v1:= String_temp  @kind object;
+  #L02c2cc.  Intent_v0:= new `android.content.Intent`;
+  #L02c2d0.  call Context_temp:=  `com.ksu.explicit1.MainActivity.getApplicationContext`(MainActivity_v5) @signature `Lcom/ksu/explicit1/MainActivity;.getApplicationContext:()Landroid/content/Context;` @classDescriptor ^`com.ksu.explicit1.MainActivity` @kind virtual;
+  #L02c2d6.  Context_v3:= Context_temp  @kind object;
+  #L02c2d8.  Class_v4:= constclass @type ^`com.ksu.explicit1.FooActivity` @kind object;
+  #L02c2dc.  call `android.content.Intent.<init>`(Intent_v0, Context_v3, Class_v4) @signature `Landroid/content/Intent;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V` @classDescriptor ^`android.content.Intent` @kind direct;
+  #L02c2e2.  String_v3:= "data" @kind object;
+  #L02c2e6.  call Intent_temp:=  `android.content.Intent.putExtra`(Intent_v0, String_v3, String_v1) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @classDescriptor ^`android.content.Intent` @kind virtual;
+  #L02c2ec.  call `com.ksu.explicit1.MainActivity.startActivity`(MainActivity_v5, Intent_v0) @signature `Lcom/ksu/explicit1/MainActivity;.startActivity:(Landroid/content/Intent;)V` @classDescriptor ^`com.ksu.explicit1.MainActivity` @kind virtual;
+  #L02c2f2.  return  @kind void;
+}

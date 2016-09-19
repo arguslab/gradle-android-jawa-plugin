@@ -9,5 +9,6 @@
     <TextView
             android:text="@string/hello_pure_jawa"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/jawa_text_view"/>
 </RelativeLayout>

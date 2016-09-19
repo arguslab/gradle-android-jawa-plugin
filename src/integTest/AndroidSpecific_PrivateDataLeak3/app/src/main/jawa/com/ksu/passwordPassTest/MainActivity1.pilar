@@ -1,13 +1,13 @@
-record `com.ksu.passwordPassTest.MainActivity$1` @kind class @AccessFlag  extends `android.view.View$OnClickListener` @kind interface {
-  `com.ksu.passwordPassTest.MainActivity` `com.ksu.passwordPassTest.MainActivity$1.this$0` @AccessFlag FINAL;
+record `com.ksu.passwordPassTest.MainActivity1` @kind class @AccessFlag  extends `android.view.View$OnClickListener` @kind interface {
+  `com.ksu.passwordPassTest.MainActivity` `com.ksu.passwordPassTest.MainActivity1.activity` @AccessFlag FINAL;
 }
-procedure `void` `com.ksu.passwordPassTest.MainActivity$1.<init>`(`com.ksu.passwordPassTest.MainActivity$1` MainActivity$1_v0 @kind this, `com.ksu.passwordPassTest.MainActivity` MainActivity_v1 @kind object) @owner ^`com.ksu.passwordPassTest.MainActivity$1` @signature `Lcom/ksu/passwordPassTest/MainActivity$1;.<init>:(Lcom/ksu/passwordPassTest/MainActivity;)V` @AccessFlag CONSTRUCTOR {
+procedure `void` `com.ksu.passwordPassTest.MainActivity1.<init>`(`com.ksu.passwordPassTest.MainActivity1` MainActivity1_v0 @kind this, `com.ksu.passwordPassTest.MainActivity` MainActivity_v1 @kind object) @owner ^`com.ksu.passwordPassTest.MainActivity1` @signature `Lcom/ksu/passwordPassTest/MainActivity1;.<init>:(Lcom/ksu/passwordPassTest/MainActivity;)V` @AccessFlag CONSTRUCTOR {
 
-  #L0470f8.  MainActivity$1_v0.`com.ksu.passwordPassTest.MainActivity$1.this$0`:= MainActivity_v1  @kind object @type ^`com.ksu.passwordPassTest.MainActivity`;
-  #L0470fc.  call `java.lang.Object.<init>`(MainActivity$1_v0) @signature `Ljava/lang/Object;.<init>:()V` @classDescriptor ^`java.lang.Object` @kind direct;
+  #L0470f8.  MainActivity1_v0.`com.ksu.passwordPassTest.MainActivity1.activity`:= MainActivity_v1  @kind object @type ^`com.ksu.passwordPassTest.MainActivity`;
+  #L0470fc.  call `java.lang.Object.<init>`(MainActivity1_v0) @signature `Ljava/lang/Object;.<init>:()V` @classDescriptor ^`java.lang.Object` @kind direct;
   #L047102.  return  @kind void;
 }
-procedure `void` `com.ksu.passwordPassTest.MainActivity$1.onClick`(`com.ksu.passwordPassTest.MainActivity$1` MainActivity$1_v4 @kind this, `android.view.View` View_v5 @kind object) @owner ^`com.ksu.passwordPassTest.MainActivity$1` @signature `Lcom/ksu/passwordPassTest/MainActivity$1;.onClick:(Landroid/view/View;)V` @AccessFlag PUBLIC {
+procedure `void` `com.ksu.passwordPassTest.MainActivity1.onClick`(`com.ksu.passwordPassTest.MainActivity1` MainActivity1_v4 @kind this, `android.view.View` View_v5 @kind object) @owner ^`com.ksu.passwordPassTest.MainActivity1` @signature `Lcom/ksu/passwordPassTest/MainActivity1;.onClick:(Landroid/view/View;)V` @AccessFlag PUBLIC {
     `java.lang.String` String_v3;
     `android.content.Context` Context_temp;
     `com.ksu.passwordPassTest.MainActivity` MainActivity_v2;
@@ -21,13 +21,13 @@ procedure `void` `com.ksu.passwordPassTest.MainActivity$1.onClick`(`com.ksu.pass
     `java.lang.String` String_v2;
     `java.lang.String` String_temp;
 
-  #L047114.  MainActivity_v2:= MainActivity$1_v4.`com.ksu.passwordPassTest.MainActivity$1.this$0`  @kind object @type ^`com.ksu.passwordPassTest.MainActivity`;
+  #L047114.  MainActivity_v2:= MainActivity1_v4.`com.ksu.passwordPassTest.MainActivity1.activity`  @kind object @type ^`com.ksu.passwordPassTest.MainActivity`;
   #L047118.  EditText_v2:= MainActivity_v2.`com.ksu.passwordPassTest.MainActivity.editText`  @kind object @type ^`android.widget.EditText`;
   #L04711c.  call Editable_temp:=  `android.widget.EditText.getText`(EditText_v2) @signature `Landroid/widget/EditText;.getText:()Landroid/text/Editable;` @classDescriptor ^`android.widget.EditText` @kind virtual;
   #L047122.  Editable_v1:= Editable_temp  @kind object;
   #L047124.  Intent_v0:= new `android.content.Intent`;
   #L047128.  call `android.content.Intent.<init>`(Intent_v0) @signature `Landroid/content/Intent;.<init>:()V` @classDescriptor ^`android.content.Intent` @kind direct;
-  #L04712e.  MainActivity_v2:= MainActivity$1_v4.`com.ksu.passwordPassTest.MainActivity$1.this$0`  @kind object @type ^`com.ksu.passwordPassTest.MainActivity`;
+  #L04712e.  MainActivity_v2:= MainActivity1_v4.`com.ksu.passwordPassTest.MainActivity1.activity`  @kind object @type ^`com.ksu.passwordPassTest.MainActivity`;
   #L047132.  call Context_temp:=  `com.ksu.passwordPassTest.MainActivity.getApplicationContext`(MainActivity_v2) @signature `Lcom/ksu/passwordPassTest/MainActivity;.getApplicationContext:()Landroid/content/Context;` @classDescriptor ^`com.ksu.passwordPassTest.MainActivity` @kind virtual;
   #L047138.  Context_v2:= Context_temp  @kind object;
   #L04713a.  Class_v3:= constclass @type ^`com.ksu.passwordPassTest.FooActivity` @kind object;
@@ -36,7 +36,7 @@ procedure `void` `com.ksu.passwordPassTest.MainActivity$1.onClick`(`com.ksu.pass
   #L047148.  call String_temp:=  `android.text.Editable.toString`(Editable_v1) @signature `Landroid/text/Editable;.toString:()Ljava/lang/String;` @classDescriptor ^`android.text.Editable` @kind interface;
   #L04714e.  String_v3:= String_temp  @kind object;
   #L047150.  call Intent_temp:=  `android.content.Intent.putExtra`(Intent_v0, String_v2, String_v3) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @classDescriptor ^`android.content.Intent` @kind virtual;
-  #L047156.  MainActivity_v2:= MainActivity$1_v4.`com.ksu.passwordPassTest.MainActivity$1.this$0`  @kind object @type ^`com.ksu.passwordPassTest.MainActivity`;
+  #L047156.  MainActivity_v2:= MainActivity1_v4.`com.ksu.passwordPassTest.MainActivity1.activity`  @kind object @type ^`com.ksu.passwordPassTest.MainActivity`;
   #L04715a.  call `com.ksu.passwordPassTest.MainActivity.startActivity`(MainActivity_v2, Intent_v0) @signature `Lcom/ksu/passwordPassTest/MainActivity;.startActivity:(Landroid/content/Intent;)V` @classDescriptor ^`com.ksu.passwordPassTest.MainActivity` @kind virtual;
   #L047160.  return  @kind void;
 }
