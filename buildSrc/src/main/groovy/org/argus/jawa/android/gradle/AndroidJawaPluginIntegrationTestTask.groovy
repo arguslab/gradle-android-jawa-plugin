@@ -25,7 +25,7 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
                 ["app", true],
                 ["pure-jawa", true],
                 ["AndroidSpecific_PrivateDataLeak3", true],
-//                ["InterComponentCommunication_Explicit1", true],
+                ["InterComponentCommunication_Explicit1", true],
 //                ["lib", false],
 //                ["appAndLib", true],
 //                ["largeAppAndLib", false],
