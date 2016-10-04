@@ -19,6 +19,7 @@ before_install:
   - source ~/.android-sdk-installer/env
 
   # Create and start emulator
+  - android list targets
   - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a
   - emulator -avd test -no-audio -no-window -memory 512 -wipe-data > emulator.log 2>&1 &
   - adb logcat > logcat.log &
