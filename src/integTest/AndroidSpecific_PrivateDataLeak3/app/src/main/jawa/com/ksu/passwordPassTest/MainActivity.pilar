@@ -23,12 +23,12 @@ procedure `void` `com.ksu.passwordPassTest.MainActivity.onCreate`(`com.ksu.passw
   #L047198.  call `android.app.Activity.onCreate`(MainActivity_v2, Bundle_v3) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @classDescriptor ^`android.app.Activity` @kind super;
   #L04719e.  int_v0:= 2130903042I;
   #L0471a4.  call `com.ksu.passwordPassTest.MainActivity.setContentView`(MainActivity_v2, int_v0) @signature `Lcom/ksu/passwordPassTest/MainActivity;.setContentView:(I)V` @classDescriptor ^`com.ksu.passwordPassTest.MainActivity` @kind virtual;
-  #L0471aa.  int_v0:= 2131230722I;
+  #L0471aa.  int_v0:= 2131034115I;
   #L0471b0.  call View_temp:=  `com.ksu.passwordPassTest.MainActivity.findViewById`(MainActivity_v2, int_v0) @signature `Lcom/ksu/passwordPassTest/MainActivity;.findViewById:(I)Landroid/view/View;` @classDescriptor ^`com.ksu.passwordPassTest.MainActivity` @kind virtual;
   #L0471b6.  View_v0:= View_temp  @kind object;
   #L0471b8.  EditText_v0:= (`android.widget.EditText`)View_v0  @kind object;
   #L0471bc.  MainActivity_v2.`com.ksu.passwordPassTest.MainActivity.editText`:= EditText_v0  @kind object @type ^`android.widget.EditText`;
-  #L0471c0.  int_v0:= 2131230723I;
+  #L0471c0.  int_v0:= 2131034113I;
   #L0471c6.  call View_temp:=  `com.ksu.passwordPassTest.MainActivity.findViewById`(MainActivity_v2, int_v0) @signature `Lcom/ksu/passwordPassTest/MainActivity;.findViewById:(I)Landroid/view/View;` @classDescriptor ^`com.ksu.passwordPassTest.MainActivity` @kind virtual;
   #L0471cc.  View_v0:= View_temp  @kind object;
   #L0471ce.  Button_v0:= (`android.widget.Button`)View_v0  @kind object;

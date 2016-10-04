@@ -31,12 +31,12 @@ dependencies {
     compile localGroovy()
     compile "commons-io:commons-io:2.4"
     compile "gradle.plugin.com.github.arguslab:gradle-jawa-plugin:1.0.4"
-    compile group: 'com.github.arguslab', name: 'jawa-compiler_2.11', version: '1.0.3'
+    compile group: 'com.github.arguslab', name: 'jawa-compiler_2.11', version: '1.0.4'
     testCompile "com.android.tools.build:gradle:2.0.0"
 }
 
 group = "com.github.arguslab"
-version = "1.0.1-SNAPSHOT"
+version = "1.0.2-SNAPSHOT"
 description = "Gradle Android Jawa Plugin adds jawa language support to official gradle android plugin."
 
 sourceCompatibility = JavaVersion.VERSION_1_6

@@ -36,7 +36,7 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
         ].each { projectName, runOnTravis ->
             def gradleArgs = ["clean", "connectedCheck", "uninstallAll"]
             [
-                    ["2.13", true,  "1.0.3", "2.0.0", "android-23", "24.0.2", "8", "23"],
+                    ["2.13", true,  "1.0.4", "2.0.0", "android-23", "24.0.2", "8", "23"],
             ].each { testParameters ->
                 if (!travis || (runOnTravis && testParameters[1])) {
                     def gradleVersion = testParameters[0]
