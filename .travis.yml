@@ -15,7 +15,8 @@ env:
 before_install:
   # Install base Android SDK
   - export COMPONENTS=build-tools-22.0.1,android-22,android-18,sys-img-armeabi-v7a-android-18,extra-google-m2repository,extra-android-m2repository,extra-android-support
-  - curl -L https://raw.github.com/embarkmobile/android-sdk-installer/version-2/android-sdk-installer | bash /dev/stdin --install=$COMPONENTS
+  - export LICENSES="android-sdk-license-c81a61d9"
+  - curl -L https://raw.github.com/embarkmobile/android-sdk-installer/version-2/android-sdk-installer | bash /dev/stdin --install=$COMPONENTS --accept=$LICENSES
   - source ~/.android-sdk-installer/env
 
   # Create and start emulator
