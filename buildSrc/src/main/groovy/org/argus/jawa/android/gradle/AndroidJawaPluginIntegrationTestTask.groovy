@@ -22,10 +22,10 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
     def run() {
         def travis = System.getenv("TRAVIS").toString().toBoolean()
         [
-//                ["app", true],
-//                ["pure-jawa", true],
+                ["app", true],
+                ["pure-jawa", true],
                 ["AndroidSpecific_PrivateDataLeak3", true],
-//                ["InterComponentCommunication_Explicit1", true],
+                ["InterComponentCommunication_Explicit1", true],
 //                ["lib", false],
 //                ["appAndLib", true],
 //                ["largeAppAndLib", false],
@@ -69,7 +69,7 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
                 "org.gradle.jvmargs": "-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError",
                 snapshotRepositoryUrl: snapshotRepositoryUrl,
                 jawaVersion: jawaVersion,
-                androidJawaPluginVersion: "1.0.1-SNAPSHOT",
+                androidJawaPluginVersion: "1.0.2-SNAPSHOT",
                 androidPluginVersion: androidPluginVersion,
                 androidPluginCompileSdkVersion: androidPluginCompileSdkVersion,
                 androidPluginBuildToolsVersion: androidPluginBuildToolsVersion,
