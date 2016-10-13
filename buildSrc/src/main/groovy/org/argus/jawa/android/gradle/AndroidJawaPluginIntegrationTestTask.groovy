@@ -26,17 +26,10 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
                 ["pure-jawa", true],
                 ["AndroidSpecific_PrivateDataLeak3", true],
                 ["InterComponentCommunication_Explicit1", true],
-//                ["lib", false],
-//                ["appAndLib", true],
-//                ["largeAppAndLib", false],
-//                ["noScala", false],
-//                ["simpleFlavor", false],
-//                ["useScalaOnlyTest", false],
-//                ["apt", false],
         ].each { projectName, runOnTravis ->
             def gradleArgs = ["clean", "connectedCheck", "uninstallAll"]
             [
-                    ["2.13", true,  "1.0.4", "2.0.0", "android-23", "24.0.2", "8", "23"],
+                    ["2.13", true, "2.0.0", "android-23", "24.0.2", "8", "23"],
             ].each { testParameters ->
                 if (!travis || (runOnTravis && testParameters[1])) {
                     def gradleVersion = testParameters[0]
@@ -61,14 +54,13 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
         gradleWrapperProperties
     }
 
-    def getGradleProperties(jawaVersion, androidPluginVersion, androidPluginCompileSdkVersion,
+    def getGradleProperties(androidPluginVersion, androidPluginCompileSdkVersion,
                             androidPluginBuildToolsVersion, androidPluginMinSdkVersion, androidPluginTargetSdkVersion) {
         def snapshotRepositoryUrl = [project.buildFile.parentFile.absolutePath, "gh-pages", "repository", "snapshot"].join(File.separator)
         def gradleProperties = new Properties()
         gradleProperties.putAll([
                 "org.gradle.jvmargs": "-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError",
                 snapshotRepositoryUrl: snapshotRepositoryUrl,
-                jawaVersion: jawaVersion,
                 androidJawaPluginVersion: "1.0.2-SNAPSHOT",
                 androidPluginVersion: androidPluginVersion,
                 androidPluginCompileSdkVersion: androidPluginCompileSdkVersion,
