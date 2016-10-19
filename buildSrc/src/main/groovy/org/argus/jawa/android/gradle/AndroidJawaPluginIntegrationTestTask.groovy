@@ -29,7 +29,8 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
         ].each { projectName, runOnTravis ->
             def gradleArgs = ["clean", "connectedCheck", "uninstallAll"]
             [
-                    ["2.13", true, "2.0.0", "android-23", "24.0.2", "8", "23"],
+                    ["2.14.1", true, "2.2.0", "android-23", "24.0.2", "8", "23"],
+//                    ["2.13", true, "2.0.0", "android-23", "24.0.2", "8", "23"],
             ].each { testParameters ->
                 if (!travis || (runOnTravis && testParameters[1])) {
                     def gradleVersion = testParameters[0]
@@ -61,7 +62,7 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
         gradleProperties.putAll([
                 "org.gradle.jvmargs": "-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError",
                 snapshotRepositoryUrl: snapshotRepositoryUrl,
-                androidJawaPluginVersion: "1.0.3-SNAPSHOT",
+                androidJawaPluginVersion: "1.0.4-SNAPSHOT",
                 androidPluginVersion: androidPluginVersion,
                 androidPluginCompileSdkVersion: androidPluginCompileSdkVersion,
                 androidPluginBuildToolsVersion: androidPluginBuildToolsVersion,

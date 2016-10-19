@@ -128,7 +128,7 @@ public class AndroidJawaPlugin implements Plugin<Project> {
     static String jawaVersionFromClasspath(Collection<File> classpath) {
 //        def jawajar = JawaRuntime.findJawaJarFile(classpath)
 //        return jawajar == null ? null: jawajar.version.toString()
-        return "1.0.4"
+        return "1.0.6"
     }
 
     /**
@@ -150,7 +150,7 @@ public class AndroidJawaPlugin implements Plugin<Project> {
             if (sourceDirectorySetMap.containsKey(sourceSet.name)) {
                 return
             }
-            def include = "**/*.pilar"
+            def include = "**/*.jawa"
             sourceSet.java.filter.include(include)
             def dirSetFactory = new DefaultSourceDirectorySetFactory(fileResolver, new DefaultDirectoryFileTreeFactory())
             sourceSet.convention.plugins.jawa = new DefaultJawaSourceSet(sourceSet.name + "_AndroidJawaPlugin", dirSetFactory)

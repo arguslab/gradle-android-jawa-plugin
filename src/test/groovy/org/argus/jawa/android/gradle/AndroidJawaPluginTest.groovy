@@ -59,7 +59,7 @@ class AndroidJawaPluginTest {
     public void addDefaultJawaMainSourceSetToAndroidPlugin() {
         def plugin = getPlugin()
         Assert.assertEquals([], plugin.sourceDirectorySetMap["main"].files.toList())
-        def src1 = new File(project.file("."), ["src", "main", "jawa", "Src1.pilar"].join(File.separator))
+        def src1 = new File(project.file("."), ["src", "main", "jawa", "Src1.jawa"].join(File.separator))
         src1.parentFile.mkdirs()
         src1.withWriter { it.write("record `Src1` @kind interface @AccessFlag PUBLIC_ABSTRACT_INTERFACE {}") }
         Assert.assertEquals([src1], plugin.sourceDirectorySetMap["main"].files.toList())
@@ -72,11 +72,11 @@ class AndroidJawaPluginTest {
         def plugin = getPlugin()
         Assert.assertEquals([], plugin.sourceDirectorySetMap["customFlavor"].files.toList())
 
-        def src = new File(project.file("."), ["src", "customFlavor", "jawa", "Src.pilar"].join(File.separator))
+        def src = new File(project.file("."), ["src", "customFlavor", "jawa", "Src.jawa"].join(File.separator))
         src.parentFile.mkdirs()
         src.withWriter { it.write("record `Src` @kind interface @AccessFlag PUBLIC_ABSTRACT_INTERFACE {}") }
 
-        def testSrc = new File(project.file("."), ["src", "androidTestCustomFlavor", "jawa", "TestSrc.pilar"].join(File.separator))
+        def testSrc = new File(project.file("."), ["src", "androidTestCustomFlavor", "jawa", "TestSrc.jawa"].join(File.separator))
         testSrc.parentFile.mkdirs()
         testSrc.withWriter { it.write("record `TestSrc` @kind interface @AccessFlag PUBLIC_ABSTRACT_INTERFACE {}") }
 
@@ -88,7 +88,7 @@ class AndroidJawaPluginTest {
     public void addDefaultJawaAndroidTestSourceSetToAndroidPlugin() {
         def plugin = getPlugin()
         Assert.assertEquals([], plugin.sourceDirectorySetMap["androidTest"].files.toList())
-        def src1 = new File(project.file("."), ["src", "androidTest", "jawa", "Src1Test.pilar"].join(File.separator))
+        def src1 = new File(project.file("."), ["src", "androidTest", "jawa", "Src1Test.jawa"].join(File.separator))
         src1.parentFile.mkdirs()
         src1.withWriter { it.write("record `Src1Test` @kind interface @AccessFlag PUBLIC_ABSTRACT_INTERFACE {}") }
         Assert.assertEquals([], plugin.sourceDirectorySetMap["main"].files.toList())
@@ -98,8 +98,8 @@ class AndroidJawaPluginTest {
     @Test
     public void addCustomJawaMainSourceSetToAndroidPlugin() {
         def plugin = getPlugin()
-        def defaultSrc = new File(project.file("."), ["src", "main", "jawa", "Src1.pilar"].join(File.separator))
-        def customSrc = new File(project.file("."), ["custom", "sourceSet", "Src2.pilar"].join(File.separator))
+        def defaultSrc = new File(project.file("."), ["src", "main", "jawa", "Src1.jawa"].join(File.separator))
+        def customSrc = new File(project.file("."), ["custom", "sourceSet", "Src2.jawa"].join(File.separator))
         defaultSrc.parentFile.mkdirs()
         defaultSrc.withWriter { it.write("record `Src1` @kind interface @AccessFlag PUBLIC_ABSTRACT_INTERFACE {}") }
         customSrc.parentFile.mkdirs()
@@ -112,8 +112,8 @@ class AndroidJawaPluginTest {
     @Test
     public void addCustomJawaAndroidTestSourceSetToAndroidPlugin() {
         def plugin = getPlugin()
-        def defaultSrc = new File(project.file("."), ["src", "androidTest", "jawa", "Src1.pilar"].join(File.separator))
-        def customSrc = new File(project.file("."), ["custom", "sourceSet", "Src2.pilar"].join(File.separator))
+        def defaultSrc = new File(project.file("."), ["src", "androidTest", "jawa", "Src1.jawa"].join(File.separator))
+        def customSrc = new File(project.file("."), ["custom", "sourceSet", "Src2.jawa"].join(File.separator))
         defaultSrc.parentFile.mkdirs()
         defaultSrc.withWriter { it.write("record `Src1` @kind interface @AccessFlag PUBLIC_ABSTRACT_INTERFACE {}") }
         customSrc.parentFile.mkdirs()
@@ -126,7 +126,7 @@ class AndroidJawaPluginTest {
     @Test
     public void updateCustomJawaMainSourceSetToAndroidPlugin() {
         def plugin = getPlugin()
-        def customSrc = new File(project.file("."), ["custom", "sourceSet", "Src2.pilar"].join(File.separator))
+        def customSrc = new File(project.file("."), ["custom", "sourceSet", "Src2.jawa"].join(File.separator))
         customSrc.parentFile.mkdirs()
         customSrc.withWriter { it.write("record `Src2` @kind interface @AccessFlag PUBLIC_ABSTRACT_INTERFACE {}") }
         project.android { sourceSets { main { jawa { srcDirs = ["custom/sourceSet"] } } } }
@@ -137,7 +137,7 @@ class AndroidJawaPluginTest {
     @Test
     public void updateCustomJawaAndroidTestSourceSetToAndroidPlugin() {
         def plugin = getPlugin()
-        def customSrc = new File(project.file("."), ["custom", "testSourceSet", "Src1Test.pilar"].join(File.separator))
+        def customSrc = new File(project.file("."), ["custom", "testSourceSet", "Src1Test.jawa"].join(File.separator))
         customSrc.parentFile.mkdirs()
         customSrc.withWriter { it.write("record `Src1Test` @kind interface @AccessFlag PUBLIC_ABSTRACT_INTERFACE {}") }
         project.android { sourceSets { androidTest { jawa { srcDirs = ["custom/testSourceSet"] } } } }
