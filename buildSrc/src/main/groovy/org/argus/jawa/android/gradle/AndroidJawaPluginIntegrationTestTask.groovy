@@ -62,7 +62,7 @@ class AndroidJawaPluginIntegrationTestTask extends DefaultTask {
         gradleProperties.putAll([
                 "org.gradle.jvmargs": "-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError",
                 snapshotRepositoryUrl: snapshotRepositoryUrl,
-                androidJawaPluginVersion: "1.0.4-SNAPSHOT",
+                androidJawaPluginVersion: "1.0.5-SNAPSHOT",
                 androidPluginVersion: androidPluginVersion,
                 androidPluginCompileSdkVersion: androidPluginCompileSdkVersion,
                 androidPluginBuildToolsVersion: androidPluginBuildToolsVersion,
